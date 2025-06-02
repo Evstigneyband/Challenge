@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Твой Челлендж</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --dark: #1f2937;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--dark);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+      pointer-events: none;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #ffffff, #e0e7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    
+    .menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    
+    .menu-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    .dropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    
+    .dropdown button {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: white;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: left;
+    }
+    
+    .dropdown button:hover {
+      background: var(--light-gray);
+    }
+    
+    .dropdown button.home-btn {
+      color: var(--primary);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .dropdown button.stop-btn {
+      color: var(--danger);
+    }
+    
+    .main-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+    }
+    
+    /* Setup section styles */
+    .setup-section {
+      display: block;
+    }
+    
+    .my-challenges {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .my-challenges h3 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .challenge-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+    
+    .challenge-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .challenge-duration {
+      font-size: 1rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .challenges-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .challenge-item {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .challenge-item:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .challenge-info {
+      flex: 1;
+    }
+    
+    .challenge-name {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+    
+    .challenge-meta {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+    
+    .challenge-days {
+      text-align: center;
+      min-width: 80px;
+    }
+    
+    .no-challenges {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 2rem;
+      font-style: italic;
+    }
+    
+    .divider {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+    
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .divider span {
+      background: var(--white);
+      padding: 0 1rem;
+      position: relative;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    .form-input[type="number"] {
+      width: 120px;
+    }
+    
+    .goals-section {
+      margin-top: 2rem;
+    }
+    
+    .goal-item {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+    }
+    
+    .goal-item.dragging {
+      opacity: 0.5;
+    }
+    
+    .goal-item.drag-over {
+      border-top: 3px solid var(--primary);
+    }
+    
+    .drag-handle {
+      cursor: grab;
+      font-size: 1.2rem;
+      color: var(--gray);
+      display: none;
+    }
+    
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+    
+    .goal-input {
+      flex: 1;
+    }
+    
+    .hours-input {
+      width: 80px;
+    }
+    
+    .remove-goal {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    
+    .remove-goal:hover {
+      background: #dc2626;
+    }
+    
+    .add-goal-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .add-goal-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    
+    .total-hours {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .priority-info {
+      background: rgba(99, 102, 241, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      color: var(--primary-dark);
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .start-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      display: block;
+      margin: 2rem auto 0;
+    }
+    
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+    
+    .start-btn:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Challenge section styles */
+    .counter-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .days-counter {
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .days-label {
+      font-size: 1.2rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .today-date {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    
+    .activities-section {
+      display: none;
+    }
+    
+    .activities-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .activity-card {
+      background: var(--light-gray);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .activity-card.locked {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .activity-card.locked::after {
+      content: '🔒';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+    }
+    
+    .activity-card:hover:not(.locked) {
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .activity-name {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .activity-goal {
+      background: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    
+    .activity-select {
+      background: white;
+      border: 2px solid transparent;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      color: var(--dark);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 80px;
+    }
+    
+    .activity-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .activity-status {
+      font-size: 1.5rem;
+      width: 2rem;
+      text-align: center;
+    }
+    
+    .progress-section {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 1rem;
+      color: white;
+      margin-bottom: 2rem;
+    }
+    
+    .progress-percentage {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    
+    .progress-label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .history-section {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    
+    .history-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+    
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    
+    th {
+      background: var(--light-gray);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.875rem;
+    }
+    
+    tr:hover td {
+      background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .date-cell {
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .percent-cell {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    tfoot td {
+      font-weight: 700;
+      padding: 1rem 0.75rem;
+      border-top: 2px solid var(--light-gray);
+      background: var(--light-gray);
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .days-counter {
+        font-size: 4rem;
+      }
+      
+      .main-card {
+        padding: 1.5rem;
+      }
+      
+      .activity-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .activity-card > * {
+        justify-self: stretch;
+      }
+      
+      .activity-goal {
+        text-align: center;
+      }
+      
+      .activity-select {
+        width: 100%;
+      }
+      
+      .activity-status {
+        justify-self: center;
+      }
+      
+      table {
+        font-size: 0.75rem;
+      }
+      
+      th, td {
+        padding: 0.5rem 0.25rem;
+      }
+      
+      .goal-item {
+        flex-wrap: wrap;
+      }
+      
+      .goal-input {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 1rem 0.5rem;
+      }
+      
+      .main-card {
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+      
+      th, td {
+        font-size: 0.65rem;
+        padding: 0.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Твой Челлендж</h1>
+      <p class="subtitle">Ставь цели и добивайся их.<br>Помни о силе маленьких шагов! Успехов!</p>
+      <div class="menu" id="menu" style="display: none;">
+        <button class="menu-btn" id="hamburger">☰</button>
+        <div class="dropdown" id="dropdown">
+          <button class="home-btn" id="homeBtn">🏠 Главная</button>
+          <button class="stop-btn" id="stopBtn">⛔ Остановить челлендж</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="main-card">
+      <!-- Setup Section -->
+      <div class="setup-section" id="setupSection">
+        <!-- My Challenges List -->
+        <div class="my-challenges" id="myChallenges" style="display: none;">
+          <h3>Мои челленджи</h3>
+          <div class="challenges-list" id="challengesList"></div>
+        </div>
+        
+        <div class="divider" id="divider" style="display: none;">
+          <span>или создать новый</span>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="challengeName">Название челленджа</label>
+          <input type="text" id="challengeName" class="form-input" placeholder="Например: Мой путь к успеху">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="challengeDays">Количество дней</label>
+          <input type="number" id="challengeDays" class="form-input" min="1" max="100" value="100">
+        </div>
+        
+        <div class="goals-section">
+          <h3 style="margin-bottom: 1rem;">Цели челленджа</h3>
+          <div id="goalsList"></div>
+          <button class="add-goal-btn" id="addGoalBtn">
+            <span>+</span> Добавить цель
+          </button>
+        </div>
+        
+        <div class="total-hours" id="totalHours">Всего часов в день: 0</div>
+        
+        <div class="priority-info" id="priorityInfo" style="display: none;">
+          Перетащите цели для изменения приоритета (сверху - самая важная)
+        </div>
+        
+        <button class="start-btn" id="startSetupBtn" disabled>Начать челлендж</button>
+      </div>
+      
+      <!-- Challenge Section -->
+      <div class="challenge-title" id="challengeTitle" style="display: none;">
+        <h2 id="challengeNameDisplay"></h2>
+        <div class="challenge-duration" id="challengeDuration"></div>
+      </div>
+      
+      <div class="counter-section" id="counterSection" style="display: none;">
+        <div class="days-counter" id="counter">0</div>
+        <div class="days-label">дней осталось</div>
+      </div>
+      
+      <div class="today-date" id="todayDate"></div>
+      
+      <div class="activities-section" id="challengeSection">
+        <div class="activities-grid" id="activities"></div>
+        
+        <div class="progress-section">
+          <div class="progress-percentage" id="percent">0%</div>
+          <div class="progress-label">выполнено сегодня</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="history-section" id="historySection" style="display: none;">
+      <h2 class="history-header">История выполнения</h2>
+      <div class="table-wrapper">
+        <table id="historyTbl"></table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL = "https://kubjftkcofdibtcbcivt.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1YmpmdGtjb2ZkaWJ0Y2JjaXZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzODUyNzcsImV4cCI6MjA2Mzk2MTI3N30.pfljOMGLfRvhtnQ6D2tSgm_AMrOVwMja1uI3T6TTub8";
+    const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const DAY_MS = 86400000;
+    let state = {
+      id: null,
+      challengeName: '',
+      totalDays: 100,
+      goals: [],
+      startISO: null,
+      lastProcessedISO: null,
+      activities: {},
+      history: {}
+    };
+    
+    let setupGoals = [];
+    let draggedElement = null;
+
+    /* DOM refs */
+    const $ = id => document.getElementById(id);
+    const setupSection = $("setupSection");
+    const challengeNameInput = $("challengeName");
+    const challengeDaysInput = $("challengeDays");
+    const goalsList = $("goalsList");
+    const addGoalBtn = $("addGoalBtn");
+    const totalHoursDiv = $("totalHours");
+    const priorityInfo = $("priorityInfo");
+    const startSetupBtn = $("startSetupBtn");
+    const counter = $("counter");
+    const hamburger = $("hamburger");
+    const dropdown = $("dropdown");
+    const menu = $("menu");
+    const percent = $("percent");
+    const todayLbl = $("todayDate");
+    const historyTbl = $("historyTbl");
+    const section = $("challengeSection");
+    const counterSection = $("counterSection");
+    const historySection = $("historySection");
+    const activitiesGrid = $("activities");
+    const stopBtn = $("stopBtn");
+    const homeBtn = $("homeBtn");
+    const myChallenges = $("myChallenges");
+    const challengesList = $("challengesList");
+    const challengeTitle = $("challengeTitle");
+    const challengeNameDisplay = $("challengeNameDisplay");
+    const challengeDuration = $("challengeDuration");
+
+    /* Date helpers */
+    function formatISO(d) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+    const todayISO = () => formatISO(new Date());
+    const diff = (from, to) => Math.floor((new Date(to) - new Date(from)) / DAY_MS);
+
+    /* Setup functions */
+    function addGoal(name = '', hours = 1) {
+      const goalId = Date.now();
+      setupGoals.push({ id: goalId, name, hours });
+      renderGoals();
+    }
+
+    function removeGoal(id) {
+      setupGoals = setupGoals.filter(g => g.id !== id);
+      renderGoals();
+    }
+
+    function renderGoals() {
+      goalsList.innerHTML = setupGoals.map((goal, index) => `
+        <div class="goal-item" draggable="true" data-id="${goal.id}">
+          <span class="drag-handle">☰</span>
+          <input type="text" class="form-input goal-input" value="${goal.name}" 
+                 placeholder="Название цели" data-id="${goal.id}">
+          <input type="number" class="form-input hours-input" value="${goal.hours}" 
+                 min="0.5" max="24" step="0.5" data-id="${goal.id}">
+          <span style="color: var(--gray);">ч/день</span>
+          <button class="remove-goal" onclick="window.removeGoal(${goal.id})">✕</button>
+        </div>
+      `).join('');
+
+      updateTotalHours();
+      updateStartButton();
+      
+      if (setupGoals.length > 1) {
+        priorityInfo.style.display = 'block';
+        document.querySelectorAll('.drag-handle').forEach(el => el.style.display = 'block');
+        setupDragAndDrop();
+      } else {
+        priorityInfo.style.display = 'none';
+      }
+
+      // Add event listeners
+      document.querySelectorAll('.goal-input').forEach(input => {
+        input.addEventListener('input', e => {
+          const goal = setupGoals.find(g => g.id == e.target.dataset.id);
+          if (goal) goal.name = e.target.value;
+          updateStartButton();
+        });
+      });
+
+      document.querySelectorAll('.hours-input').forEach(input => {
+        input.addEventListener('input', e => {
+          const goal = setupGoals.find(g => g.id == e.target.dataset.id);
+          if (goal) goal.hours = parseFloat(e.target.value) || 0;
+          updateTotalHours();
+        });
+      });
+    }
+
+    function setupDragAndDrop() {
+      const items = document.querySelectorAll('.goal-item');
+      
+      items.forEach(item => {
+        item.addEventListener('dragstart', e => {
+          draggedElement = item;
+          item.classList.add('dragging');
+        });
+
+        item.addEventListener('dragend', e => {
+          item.classList.remove('dragging');
+        });
+
+        item.addEventListener('dragover', e => {
+          e.preventDefault();
+          const afterElement = getDragAfterElement(goalsList, e.clientY);
+          if (afterElement == null) {
+            goalsList.appendChild(draggedElement);
+          } else {
+            goalsList.insertBefore(draggedElement, afterElement);
+          }
+        });
+      });
+    }
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('.goal-item:not(.dragging)')];
+      
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function updateTotalHours() {
+      const total = setupGoals.reduce((sum, goal) => sum + (goal.hours || 0), 0);
+      totalHoursDiv.textContent = `Всего часов в день: ${total}`;
+    }
+
+    function updateStartButton() {
+      const hasValidName = challengeNameInput.value.trim().length > 0;
+      const hasValidGoals = setupGoals.length > 0 && setupGoals.every(g => g.name.trim().length > 0);
+      startSetupBtn.disabled = !hasValidName || !hasValidGoals;
+    }
+
+    /* Supabase functions */
+    async function loadAllChallenges() {
+      const { data, error } = await sb.from("challenge_state3")
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Load challenges error:', error);
+        return [];
+      }
+      
+      return data || [];
+    }
+    
+    async function loadChallenge(challengeId) {
+      const { data, error } = await sb.from("challenge_state3")
+        .select('*')
+        .eq('id', challengeId)
+        .single();
+      
+      if (error) {
+        console.error('Load challenge error:', error);
+        return null;
+      }
+      
+      return data;
+    }
+    
+    async function loadExistingChallenge() {
+      const savedName = localStorage.getItem('lastChallengeName');
+      if (savedName) {
+        const { data, error } = await sb.from("challenge_state3")
+          .select('*')
+          .eq('challengeName', savedName)
+          .maybeSingle();
+        
+        if (data) {
+          state = data;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    async function saveState() {
+      if (!state.id) return;
+      
+      const { error } = await sb.from("challenge_state3")
+        .update({
+          activities: state.activities,
+          history: state.history,
+          lastProcessedISO: state.lastProcessedISO
+        })
+        .eq('id', state.id);
+        
+      if (error) console.error('Save error:', error);
+    }
+
+    async function createNewChallenge() {
+      try {
+        // Reorder setupGoals based on final DOM order
+        const orderedGoals = [];
+        document.querySelectorAll('.goal-item').forEach(item => {
+          const goalId = parseInt(item.dataset.id);
+          const goal = setupGoals.find(g => g.id === goalId);
+          if (goal) orderedGoals.push(goal);
+        });
+
+        const newState = {
+          challengeName: challengeNameInput.value.trim(),
+          totalDays: parseInt(challengeDaysInput.value),
+          goals: orderedGoals.map((g, i) => ({ 
+            name: g.name, 
+            hours: g.hours, 
+            priority: i + 1 
+        })),
+          startISO: todayISO(),
+          lastProcessedISO: todayISO(),
+          activities: {},
+          history: {}
+        };
+
+        // Initialize activities
+        orderedGoals.forEach((g, i) => {
+          newState.activities[`sel${i + 1}`] = 0;
+        });
+
+        console.log('Creating challenge with data:', newState);
+
+        const { data, error } = await sb.from("challenge_state3")
+          .insert(newState)
+          .select()
+          .single();
+
+        if (error) {
+          console.error('Create error details:', error);
+          alert(`Ошибка создания челленджа: ${error.message || error.details || 'Неизвестная ошибка'}`);
+          return;
+        }
+
+        if (!data) {
+          console.error('No data returned from insert');
+          alert('Ошибка: данные не были созданы');
+          return;
+        }
+
+        state = data;
+        localStorage.setItem('lastChallengeName', state.challengeName);
+        showChallenge();
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        alert(`Неожиданная ошибка: ${err.message}`);
+      }
+    }
+
+    /* Rollover */
+    async function ensureRollover() {
+      if (!state.startISO) return;
+      const today = todayISO();
+      if (state.lastProcessedISO === today) return;
+      
+      const yest = new Date();
+      yest.setHours(0, 0, 0, 0);
+      yest.setDate(yest.getDate() - 1);
+      const yesterday = formatISO(yest);
+      
+      state.history[yesterday] = { ...state.activities };
+      
+      // Reset activities
+      Object.keys(state.activities).forEach(key => {
+        state.activities[key] = 0;
+      });
+      
+      
+      state.lastProcessedISO = today;
+      await saveState();
+    }
+
+    /* UI functions */
+    function showSetup() {
+      setupSection.style.display = 'block';
+      challengeTitle.style.display = 'none';
+      counterSection.style.display = 'none';
+      section.style.display = 'none';
+      menu.style.display = 'none';
+      historySection.style.display = 'none';
+      
+      // Load and show existing challenges
+      loadAndShowChallenges();
+    }
+    
+    async function loadAndShowChallenges() {
+      const challenges = await loadAllChallenges();
+      
+      if (challenges.length > 0) {
+        myChallenges.style.display = 'block';
+        divider.style.display = 'block';
+        
+        challengesList.innerHTML = challenges.map(ch => {
+          const daysLeft = Math.max(0, ch.totalDays - diff(ch.startISO, todayISO()));
+          const totalGoals = ch.goals.length;
+          
+          return `
+            <div class="challenge-item" onclick="window.continueChallenge(${ch.id})">
+              <div class="challenge-info">
+                <div class="challenge-name">${ch.challengeName}</div>
+                <div class="challenge-meta">
+                  ${totalGoals} ${totalGoals === 1 ? 'цель' : totalGoals < 5 ? 'цели' : 'целей'} • 
+                  Начат ${new Date(ch.startISO).toLocaleDateString('ru-RU')}
+                </div>
+              </div>
+              <div class="challenge-days">
+                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">${daysLeft}</div>
+                <div style="font-size: 0.875rem; color: var(--gray);">из ${ch.totalDays}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        myChallenges.style.display = 'none';
+        divider.style.display = 'none';
+      }
+    }
+
+    function showChallenge() {
+      setupSection.style.display = 'none';
+      challengeTitle.style.display = 'block';
+      counterSection.style.display = 'block';
+      section.style.display = 'block';
+      menu.style.display = 'block';
+      
+      // Показываем название и информацию о челлендже
+      challengeNameDisplay.textContent = state.challengeName;
+      const currentDay = diff(state.startISO, todayISO()) + 1;
+      challengeDuration.textContent = `День ${currentDay} из ${state.totalDays}`;
+      
+      renderChallenge();
+      renderHistory();
+    }
+
+    function renderChallenge() {
+      const today = new Date();
+      todayLbl.textContent = today.toLocaleDateString('ru-RU', { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+      });
+
+      // Update counter
+      const daysLeft = Math.max(0, state.totalDays - diff(state.startISO, todayISO()));
+      counter.textContent = daysLeft;
+
+      // Render activities
+      activitiesGrid.innerHTML = state.goals.map((goal, i) => {
+        const isLocked = !canAccessGoal(i);
+        return `
+          <div class="activity-card ${isLocked ? 'locked' : ''}">
+            <div class="activity-name">${goal.name}</div>
+            <div class="activity-goal">${goal.hours} ч</div>
+            <select class="activity-select" id="sel${i + 1}" ${isLocked ? 'disabled' : ''}>
+              ${generateOptions(state.activities[`sel${i + 1}`] || 0)}
+            </select>
+            <div class="activity-status" id="st${i + 1}">${getStatusIcon(i)}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Add event listeners
+      state.goals.forEach((_, i) => {
+        const select = $(`sel${i + 1}`);
+        if (select && !select.disabled) {
+          select.onchange = async () => {
+            state.activities[`sel${i + 1}`] = parseFloat(select.value);
+            updateStatus();
+            await saveState();
+            // Перерисовать интерфейс для обновления блокировок
+            renderChallenge();
+          };
+        }
+      });
+
+      updateStatus();
+    }
+
+    function canAccessGoal(index) {
+      if (index === 0) return true;
+      
+      // Check if all previous goals are completed
+      for (let i = 0; i < index; i++) {
+        const hours = state.activities[`sel${i + 1}`] || 0;
+        if (hours < state.goals[i].hours) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function generateOptions(selected) {
+      return Array.from({ length: 25 }, (_, i) => {
+        const value = i * 0.5;
+        return `<option value="${value}" ${value === selected ? 'selected' : ''}>${value} ч</option>`;
+      }).join('');
+    }
+
+    function getStatusIcon(index) {
+      const hours = state.activities[`sel${index + 1}`] || 0;
+      const goal = state.goals[index];
+      return hours >= goal.hours ? '✅' : '❌';
+    }
+
+    function updateStatus() {
+      let done = 0;
+      state.goals.forEach((goal, i) => {
+        const hours = state.activities[`sel${i + 1}`] || 0;
+        const icon = $(`st${i + 1}`);
+        if (icon) {
+          icon.textContent = hours >= goal.hours ? '✅' : '❌';
+          if (hours >= goal.hours) done++;
+        }
+      });
+      
+      percent.textContent = Math.round(done / state.goals.length * 100) + '%';
+    }
+
+    function renderHistory() {
+      const days = Object.keys(state.history);
+      if (!days.length) {
+        historySection.style.display = 'none';
+        return;
+      }
+      
+      historySection.style.display = 'block';
+      
+      let html = '<thead><tr><th>Дата</th>';
+      html += state.goals.map(g => `<th>${g.name}</th>`).join('');
+      html += '<th>%</th></tr></thead><tbody>';
+      
+      let totalPerc = 0;
+      
+      days.sort((a, b) => new Date(b) - new Date(a)).forEach(d => {
+        const row = state.history[d];
+        let done = 0;
+        
+        state.goals.forEach((goal, i) => {
+          if ((row[`sel${i + 1}`] || 0) >= goal.hours) done++;
+        });
+        
+        const perc = Math.round(done / state.goals.length * 100);
+        totalPerc += perc;
+        
+        const dateObj = new Date(d);
+        const formattedDate = dateObj.toLocaleDateString('ru-RU', { 
+          day: 'numeric', 
+          month: 'short' 
+        });
+        
+        html += `<tr><td class="date-cell">${formattedDate}</td>`;
+        state.goals.forEach((goal, i) => {
+          const val = row[`sel${i + 1}`] || 0;
+          const isComplete = val >= goal.hours;
+          html += `<td style="color: ${isComplete ? 'var(--success)' : 'var(--gray)'}">${val}</td>`;
+        });
+        html += `<td class="percent-cell">${perc}%</td></tr>`;
+      });
+      
+      html += '</tbody>';
+      const avg = Math.round(totalPerc / days.length * 10) / 10;
+      html += `<tfoot><tr><td colspan="${state.goals.length + 1}" style="text-align:right;">Средний процент</td>`;
+      html += `<td class="percent-cell">${avg}%</td></tr></tfoot>`;
+      
+      historyTbl.innerHTML = html;
+    }
+
+    /* Event handlers */
+    challengeNameInput.addEventListener('input', updateStartButton);
+    addGoalBtn.addEventListener('click', () => addGoal());
+    
+    startSetupBtn.addEventListener('click', async () => {
+      if (!startSetupBtn.disabled) {
+        await createNewChallenge();
+      }
+    });
+
+    hamburger.onclick = () => dropdown.classList.toggle('show');
+    window.onclick = e => {
+      if (!menu.contains(e.target)) dropdown.classList.remove('show');
+    };
+    
+    homeBtn.onclick = () => {
+      dropdown.classList.remove('show');
+      // Сохраняем текущий челлендж в localStorage для возврата
+      if (state.challengeName) {
+        localStorage.setItem('lastChallengeName', state.challengeName);
+      }
+      // Очищаем форму создания нового челленджа
+      challengeNameInput.value = '';
+      challengeDaysInput.value = '100';
+      setupGoals = [];
+      addGoal('', 2);
+      // Показываем главную страницу
+      showSetup();
+    };
+    
+    stopBtn.onclick = async () => {
+      if (confirm('Вы уверены, что хотите остановить челлендж?')) {
+        if (state.id) {
+          const { error } = await sb.from("challenge_state3").delete().eq('id', state.id);
+          if (error) console.error('Delete error:', error);
+        }
+        localStorage.removeItem('lastChallengeName');
+        location.reload();
+      }
+    };
+
+    // Make functions available globally
+    window.removeGoal = removeGoal;
+    window.continueChallenge = async (challengeId) => {
+      const challenge = await loadChallenge(challengeId);
+      if (challenge) {
+        state = challenge;
+        localStorage.setItem('lastChallengeName', state.challengeName);
+        await ensureRollover();
+        showChallenge();
+      }
+    };
+
+    /* Initialize */
+    async function init() {
+      const hasExisting = await loadExistingChallenge();
+      
+      if (hasExisting) {
+        await ensureRollover();
+        showChallenge();
+      } else {
+        showSetup();
+        // Add default goals
+        addGoal('', 2);
+        // Load challenges list
+        loadAndShowChallenges();
+      }
+      
+      // Auto-rollover check every minute
+      setInterval(async () => {
+        if (state.startISO) {
+          await ensureRollover();
+          renderChallenge();
+        }
+      }, 60000);
+      
+      // Auto-refresh when tab becomes visible
+      document.addEventListener('visibilitychange', async () => {
+        if (!document.hidden && state.id) {
+          // Reload current challenge data
+          const freshData = await loadChallenge(state.id);
+          if (freshData) {
+            state = freshData;
+            await ensureRollover();
+            renderChallenge();
+            renderHistory();
+          }
+        }
+      });
+      
+      // Also refresh when window gets focus
+      window.addEventListener('focus', async () => {
+        if (state.id) {
+          const freshData = await loadChallenge(state.id);
+          if (freshData) {
+            state = freshData;
+            await ensureRollover();
+            renderChallenge();
+            renderHistory();
+          }
+        }
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
