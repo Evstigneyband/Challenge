@@ -21,6 +21,187 @@
       --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
     
+    /* Auth Modal Styles */
+    .auth-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(5px);
+    }
+    
+    .auth-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .auth-card h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    
+    .auth-subtitle {
+      color: var(--gray);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    
+    .auth-input {
+      width: 100%;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      border: 2px solid var(--light-gray);
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    .auth-button {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    
+    .auth-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+    
+    .auth-button:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .otp-inputs {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    
+    .otp-input {
+      width: 3rem;
+      height: 3.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      border: 2px solid var(--light-gray);
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+    }
+    
+    .otp-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    
+    .back-link:hover {
+      opacity: 0.8;
+    }
+    
+    .user-info {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      color: white;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .auth-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .otp-input {
+        width: 2.5rem;
+        height: 3rem;
+        font-size: 1.25rem;
+      }
+      
+      .user-info {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+    
     /* SVG Icons */
     .icon {
       display: inline-block;
@@ -905,10 +1086,64 @@
   </style>
 </head>
 <body>
+  <!-- Auth Modal -->
+  <div class="auth-modal" id="authModal" style="display: none;">
+    <div class="auth-card">
+      <!-- Email Step -->
+      <div id="emailStep">
+        <h2>Твой Челлендж</h2>
+        <p class="auth-subtitle">
+          Введите email для входа или регистрации
+        </p>
+        <input 
+          type="email" 
+          id="authEmailInput" 
+          class="auth-input" 
+          placeholder="your@email.com"
+          required
+        >
+        <button class="auth-button" id="sendCodeBtn" onclick="sendMagicLink()">
+          Получить код
+        </button>
+      </div>
+      
+      <!-- Code Step -->
+      <div id="codeStep" style="display: none;">
+        <h2>Введите код</h2>
+        <p class="auth-subtitle">
+          Мы отправили 6-значный код на<br>
+          <strong id="emailDisplay"></strong>
+        </p>
+        <div class="otp-inputs" id="otpInputs">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+        </div>
+        <button class="auth-button" id="verifyCodeBtn" onclick="verifyOtp()">
+          Войти
+        </button>
+        <a class="back-link" onclick="backToEmail()">
+          ← Изменить email
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
   <div class="container">
     <div class="header">
       <h1>Твой Челлендж</h1>
       <p class="subtitle">Ставь цели и добивайся их.<br>Помни о силе маленьких шагов! Успехов!</p>
+      
+      <!-- User Info -->
+      <div class="user-info" id="userInfo" style="display: none;">
+        <span id="userEmail"></span>
+        <button class="logout-btn" onclick="logout()">Выйти</button>
+      </div>
+      
       <div class="menu" id="menu" style="display: none;">
         <button class="menu-btn" id="hamburger">☰</button>
         <div class="dropdown" id="dropdown">
@@ -1014,6 +1249,8 @@
     const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const DAY_MS = 86400000;
+    let currentUser = null;
+    let userEmail = '';
     let state = {
       id: null,
       challengeName: '',
@@ -1032,6 +1269,13 @@
 
     /* DOM refs */
     const $ = id => document.getElementById(id);
+    const authModal = $("authModal");
+    const emailStep = $("emailStep");
+    const codeStep = $("codeStep");
+    const authEmailInput = $("authEmailInput");
+    const emailDisplay = $("emailDisplay");
+    const userInfo = $("userInfo");
+    const userEmailSpan = $("userEmail");
     const setupSection = $("setupSection");
     const challengeNameInput = $("challengeName");
     const challengeDaysInput = $("challengeDays");
@@ -1058,6 +1302,176 @@
     const challengeTitle = $("challengeTitle");
     const challengeNameDisplay = $("challengeNameDisplay");
     const challengeDuration = $("challengeDuration");
+
+    /* Auth Functions */
+    async function checkAuth() {
+      try {
+        const { data: { user } } = await sb.auth.getUser();
+        
+        if (!user) {
+          // Show auth modal
+          authModal.style.display = 'flex';
+          return false;
+        }
+        
+        currentUser = user;
+        userEmailSpan.textContent = user.email;
+        userInfo.style.display = 'flex';
+        authModal.style.display = 'none';
+        return true;
+      } catch (error) {
+        console.error('Auth check error:', error);
+        authModal.style.display = 'flex';
+        return false;
+      }
+    }
+    
+    async function sendMagicLink() {
+      const email = authEmailInput.value.trim();
+      if (!email) {
+        alert('Введите email');
+        return;
+      }
+      
+      userEmail = email;
+      const sendBtn = $('sendCodeBtn');
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Отправка...';
+      
+      try {
+        const { error } = await sb.auth.signInWithOtp({
+          email: email,
+          options: {
+            shouldCreateUser: true
+          }
+        });
+        
+        if (error) throw error;
+        
+        // Show code step
+        emailStep.style.display = 'none';
+        codeStep.style.display = 'block';
+        emailDisplay.textContent = email;
+        
+        // Focus first OTP input
+        document.querySelector('.otp-input').focus();
+        
+      } catch (error) {
+        alert('Ошибка: ' + error.message);
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Получить код';
+      }
+    }
+    
+    async function verifyOtp() {
+      const inputs = document.querySelectorAll('.otp-input');
+      const code = Array.from(inputs).map(i => i.value).join('');
+      
+      if (code.length !== 6) {
+        alert('Введите полный код');
+        return;
+      }
+      
+      const verifyBtn = $('verifyCodeBtn');
+      verifyBtn.disabled = true;
+      verifyBtn.textContent = 'Проверка...';
+      
+      try {
+        const { error } = await sb.auth.verifyOtp({
+          email: userEmail,
+          token: code,
+          type: 'email'
+        });
+        
+        if (error) throw error;
+        
+        // Success!
+        location.reload();
+        
+      } catch (error) {
+        alert('Неверный код');
+        inputs.forEach(i => i.value = '');
+        inputs[0].focus();
+      } finally {
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = 'Войти';
+      }
+    }
+    
+    function backToEmail() {
+      codeStep.style.display = 'none';
+      emailStep.style.display = 'block';
+      authEmailInput.value = userEmail;
+      authEmailInput.focus();
+    }
+    
+    async function logout() {
+      if (confirm('Вы уверены, что хотите выйти?')) {
+        await sb.auth.signOut();
+        localStorage.removeItem('lastChallengeName');
+        location.reload();
+      }
+    }
+    
+    // Setup OTP inputs auto-advance
+    document.addEventListener('DOMContentLoaded', () => {
+      const otpInputs = document.querySelectorAll('.otp-input');
+      
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+          // Only allow numbers
+          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+          
+          // Auto advance to next input
+          if (e.target.value && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+          }
+          
+          // Auto submit when all filled
+          const code = Array.from(otpInputs).map(i => i.value).join('');
+          if (code.length === 6) {
+            verifyOtp();
+          }
+        });
+        
+        input.addEventListener('keydown', (e) => {
+          // Handle backspace
+          if (e.key === 'Backspace' && !e.target.value && index > 0) {
+            otpInputs[index - 1].focus();
+          }
+        });
+        
+        // Handle paste
+        input.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const pastedData = e.clipboardData.getData('text').slice(0, 6);
+          const digits = pastedData.split('');
+          
+          digits.forEach((digit, i) => {
+            if (otpInputs[index + i]) {
+              otpInputs[index + i].value = digit.replace(/[^0-9]/g, '');
+            }
+          });
+          
+          // Focus next empty or last
+          const nextEmpty = Array.from(otpInputs).findIndex(i => !i.value);
+          if (nextEmpty !== -1) {
+            otpInputs[nextEmpty].focus();
+          } else {
+            otpInputs[otpInputs.length - 1].focus();
+            verifyOtp();
+          }
+        });
+      });
+      
+      // Handle Enter on email input
+      authEmailInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMagicLink();
+        }
+      });
+    });
 
     /* Date helpers */
     function formatISO(d) {
@@ -1406,6 +1820,12 @@
 
     async function createNewChallenge() {
       try {
+        const { data: { user } } = await sb.auth.getUser();
+        if (!user) {
+          alert('Необходимо войти в систему');
+          return;
+        }
+        
         // Collect all goals
         const allGoals = [];
         
@@ -1442,7 +1862,8 @@
           startISO: todayISO(),
           lastProcessedISO: todayISO(),
           activities: {},
-          history: {}
+          history: {},
+          user_id: user.id  // Add user_id
         };
 
         // Initialize activities
@@ -1962,6 +2383,10 @@
         showChallenge();
       }
     };
+    window.sendMagicLink = sendMagicLink;
+    window.verifyOtp = verifyOtp;
+    window.backToEmail = backToEmail;
+    window.logout = logout;
 
     /* Initialize */
     async function init() {
