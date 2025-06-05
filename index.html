@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -7,905 +6,902 @@
   <title>Твой Челлендж</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-```
-:root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --success: #10b981;
-  --danger: #ef4444;
-  --warning: #f59e0b;
-  --dark: #1f2937;
-  --gray: #6b7280;
-  --light-gray: #f3f4f6;
-  --white: #ffffff;
-  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* SVG Icons */
-.icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  fill: currentColor;
-}
-
-.icon-home {
-  width: 1.2em;
-  height: 1.2em;
-}
-
-.icon-stop {
-  width: 1.2em;
-  height: 1.2em;
-}
-
-.icon-lock {
-  width: 1.5em;
-  height: 1.5em;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.7;
-}
-
-.icon-check {
-  width: 1.5em;
-  height: 1.5em;
-  color: var(--success);
-}
-
-.icon-x {
-  width: 1.5em;
-  height: 1.5em;
-  color: var(--danger);
-}
-
-.icon-close {
-  width: 0.875em;
-  height: 0.875em;
-}
-
-.icon-drag {
-  width: 1.2em;
-  height: 1.2em;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  color: var(--dark);
-  position: relative;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
-  pointer-events: none;
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(to right, #ffffff, #e0e7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
-}
-
-.subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-  font-weight: 300;
-  line-height: 1.5;
-}
-
-.menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.menu-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.menu-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
-}
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.5rem;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.dropdown.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-
-.dropdown button {
-  width: 100%;
-  padding: 0.75rem 1.5rem;
-  background: white;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.dropdown button:hover {
-  background: var(--light-gray);
-}
-
-.dropdown button.home-btn {
-  color: var(--primary);
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.dropdown button.stop-btn {
-  color: var(--danger);
-}
-
-.main-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 2rem;
-}
-
-.setup-section {
-  display: block;
-}
-
-.my-challenges {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-  display: block;
-}
-
-.my-challenges h3 {
-  color: var(--dark);
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.challenge-title {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--light-gray);
-}
-
-.challenge-title h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.challenge-duration {
-  font-size: 1rem;
-  color: var(--gray);
-  font-weight: 500;
-}
-
-.challenges-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.challenge-item {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.challenge-item:hover {
-  background: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.challenge-info {
-  flex: 1;
-}
-
-.challenge-name {
-  font-weight: 600;
-  color: var(--dark);
-  margin-bottom: 0.25rem;
-}
-
-.challenge-meta {
-  font-size: 0.875rem;
-  color: var(--gray);
-}
-
-.challenge-days {
-  text-align: center;
-  min-width: 80px;
-}
-
-.no-challenges {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 2rem;
-  font-style: italic;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-label {
-  display: block;
-  font-weight: 600;
-  color: var(--dark);
-  margin-bottom: 0.5rem;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--light-gray);
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.2s;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.form-input[type="number"] {
-  width: 120px;
-}
-
-.goals-section {
-  margin-top: 2rem;
-}
-
-.goals-section h3 {
-  margin-bottom: 1rem;
-  color: var(--dark);
-  font-weight: 600;
-}
-
-.no-priority-section {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid var(--light-gray);
-}
-
-.no-priority-goal {
-  background: var(--light-gray);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 40px 1fr 40px;
-  align-items: center;
-  gap: 1rem;
-}
-
-.no-priority-goal .goal-input {
-  width: 100%;
-  grid-column: 2;
-}
-
-.checkbox-icon {
-  width: 24px;
-  height: 24px;
-  border: 2px solid var(--gray);
-  border-radius: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gray);
-  flex-shrink: 0;
-}
-
-.goal-item {
-  background: var(--light-gray);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 40px 1fr 40px;
-  gap: 1rem;
-  align-items: center;
-  position: relative;
-  touch-action: pan-y;
-}
-
-.goal-item.dragging {
-  opacity: 0.5;
-}
-
-.goal-item.drag-over {
-  border-top: 3px solid var(--primary);
-}
-
-.drag-handle {
-  cursor: grab;
-  font-size: 1.2rem;
-  color: var(--gray);
-  display: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-.drag-handle:active {
-  cursor: grabbing;
-}
-
-.goal-input {
-  grid-column: 2;
-  width: 100%;
-}
-
-.hours-wrapper {
-  grid-column: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.hours-input {
-  width: 80px;
-}
-
-.remove-goal {
-  background: var(--danger);
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.remove-goal svg {
-  stroke: white;
-  stroke-width: 2;
-}
-
-.remove-goal:hover {
-  background: #dc2626;
-}
-
-.add-goal-btn {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.add-no-priority-btn {
-  background: var(--gray);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.add-no-priority-btn:hover {
-  background: #4b5563;
-  transform: translateY(-1px);
-}
-
-.add-goal-btn:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-}
-
-.total-hours {
-  background: var(--light-gray);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
-  text-align: center;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.priority-info {
-  background: rgba(99, 102, 241, 0.1);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
-  color: var(--primary-dark);
-  font-weight: 500;
-  text-align: center;
-}
-
-.start-btn {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
-  border: none;
-  padding: 1rem 3rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-  display: block;
-  margin: 2rem auto 0;
-}
-
-.start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-}
-
-.start-btn:disabled {
-  background: var(--gray);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.counter-section {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.days-counter {
-  font-size: 6rem;
-  font-weight: 800;
-  color: var(--primary);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-  position: relative;
-  display: inline-block;
-}
-
-.days-label {
-  font-size: 1.2rem;
-  color: var(--gray);
-  font-weight: 500;
-}
-
-.today-date {
-  text-align: center;
-  color: var(--gray);
-  margin-bottom: 2rem;
-  font-size: 1rem;
-}
-
-.activities-section {
-  display: none;
-}
-
-.activities-grid {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.activity-card {
-  background: var(--light-gray);
-  border-radius: 1rem;
-  padding: 1.25rem;
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
-  align-items: center;
-  gap: 1rem;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.activity-card.locked {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.activity-card.locked::after {
-  content: '';
-}
-
-.activity-card:hover:not(.locked) {
-  transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.activity-name {
-  font-weight: 600;
-  color: var(--dark);
-}
-
-.activity-goal {
-  background: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--gray);
-}
-
-.activity-select {
-  background: white;
-  border: 2px solid transparent;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  color: var(--dark);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 80px;
-}
-
-.activity-select:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.activity-status {
-  font-size: 1.5rem;
-  width: 2rem;
-  text-align: center;
-}
-
-.progress-section {
-  text-align: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius: 1rem;
-  color: white;
-  margin-bottom: 2rem;
-}
-
-.progress-percentage {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-
-.progress-label {
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
-.history-section {
-  background: white;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.history-header {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: var(--dark);
-}
-
-.table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 600px;
-}
-
-th {
-  background: var(--light-gray);
-  padding: 0.75rem;
-  text-align: left;
-  font-weight: 600;
-  color: var(--dark);
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-td {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--light-gray);
-  font-size: 0.875rem;
-}
-
-tr:hover td {
-  background: rgba(99, 102, 241, 0.05);
-}
-
-.date-cell {
-  font-weight: 500;
-  color: var(--dark);
-}
-
-.percent-cell {
-  font-weight: 600;
-  color: var(--primary);
-}
-
-/* Mobile history styles */
-.history-list {
-  display: none;
-}
-
-.history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.history-item:last-child {
-  border-bottom: none;
-}
-
-.history-date {
-  font-weight: 500;
-  color: var(--dark);
-}
-
-.history-percent {
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 1.1rem;
-}
-
-.history-average {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: var(--light-gray);
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  font-weight: 600;
-}
-
-.history-average-value {
-  color: var(--primary);
-  font-size: 1.2rem;
-}
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .days-counter {
-    font-size: 4rem;
-  }
-  
-  .main-card {
-    padding: 1.5rem;
-  }
-  
-  .activity-card {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-  
-  .activity-card > * {
-    justify-self: stretch;
-  }
-  
-  .activity-goal {
-    text-align: center;
-  }
-  
-  .activity-select {
-    width: 100%;
-  }
-  
-  .activity-status {
-    justify-self: center;
-  }
-  
-  table {
-    font-size: 0.75rem;
-  }
-  
-  th, td {
-    padding: 0.5rem 0.25rem;
-  }
-  
-  /* Mobile history table styles */
-  .table-wrapper {
-    display: none;
-  }
-  
-  .history-list {
-    display: block;
-  }
-  
-  /* Buttons layout on mobile */
-  .goals-section button {
-    width: 100%;
-    margin-right: 0;
-  }
-  
-  /* No priority goals mobile styles */
-  .no-priority-goal {
-    grid-template-columns: 30px 1fr 30px;
-    padding: 0.75rem;
-    gap: 0.75rem;
-  }
-  
-  .no-priority-goal .remove-goal {
-    width: 30px;
-    height: 30px;
-    padding: 0.25rem;
-  }
-  
-  .goal-item {
-    display: grid;
-    grid-template-columns: 30px 1fr 30px;
-    grid-template-rows: auto auto;
-    gap: 0.75rem;
-    align-items: center;
-    padding: 0.75rem;
-    touch-action: pan-y;
-  }
-  
-  .goal-item .drag-handle {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    justify-self: center;
-    align-self: center;
-    padding: 0.25rem;
-    font-size: 1.5rem;
-    width: 30px;
-    text-align: center;
-  }
-  
-  .goal-item .goal-input {
-    grid-column: 2;
-    grid-row: 1;
-    width: 100%;
-    min-width: 0;
-  }
-  
-  .goal-item .hours-wrapper {
-    grid-column: 2;
-    grid-row: 2;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .goal-item .hours-input {
-    width: 80px;
-  }
-  
-  .goal-item .remove-goal {
-    grid-column: 3;
-    grid-row: 1 / 3;
-    justify-self: center;
-    align-self: center;
-    padding: 0.5rem;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 1rem 0.5rem;
-  }
-  
-  .main-card {
-    padding: 1rem;
-    border-radius: 1rem;
-  }
-  
-  th, td {
-    font-size: 0.65rem;
-    padding: 0.25rem;
-  }
-}
-```
-
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --dark: #1f2937;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* SVG Icons */
+    .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      fill: currentColor;
+    }
+    
+    .icon-home {
+      width: 1.2em;
+      height: 1.2em;
+    }
+    
+    .icon-stop {
+      width: 1.2em;
+      height: 1.2em;
+    }
+    
+    .icon-lock {
+      width: 1.5em;
+      height: 1.5em;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.7;
+    }
+    
+    .icon-check {
+      width: 1.5em;
+      height: 1.5em;
+      color: var(--success);
+    }
+    
+    .icon-x {
+      width: 1.5em;
+      height: 1.5em;
+      color: var(--danger);
+    }
+    
+    .icon-close {
+      width: 0.875em;
+      height: 0.875em;
+    }
+    
+    .icon-drag {
+      width: 1.2em;
+      height: 1.2em;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--dark);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+      pointer-events: none;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #ffffff, #e0e7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    
+    .menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    
+    .menu-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    .dropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    
+    .dropdown button {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: white;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .dropdown button:hover {
+      background: var(--light-gray);
+    }
+    
+    .dropdown button.home-btn {
+      color: var(--primary);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .dropdown button.stop-btn {
+      color: var(--danger);
+    }
+    
+    .main-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+    }
+    
+    .setup-section {
+      display: block;
+    }
+    
+    .my-challenges {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      display: block;
+    }
+    
+    .my-challenges h3 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .challenge-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+    
+    .challenge-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .challenge-duration {
+      font-size: 1rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .challenges-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .challenge-item {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .challenge-item:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .challenge-info {
+      flex: 1;
+    }
+    
+    .challenge-name {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+    
+    .challenge-meta {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+    
+    .challenge-days {
+      text-align: center;
+      min-width: 80px;
+    }
+    
+    .no-challenges {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 2rem;
+      font-style: italic;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    .form-input[type="number"] {
+      width: 120px;
+    }
+    
+    .goals-section {
+      margin-top: 2rem;
+    }
+    
+    .goals-section h3 {
+      margin-bottom: 1rem;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    
+    .no-priority-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+    
+    .no-priority-goal {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .no-priority-goal .goal-input {
+      width: 100%;
+      grid-column: 2;
+    }
+    
+    .checkbox-icon {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--gray);
+      border-radius: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+      flex-shrink: 0;
+    }
+    
+    .goal-item {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+      touch-action: pan-y;
+    }
+    
+    .goal-item.dragging {
+      opacity: 0.5;
+    }
+    
+    .goal-item.drag-over {
+      border-top: 3px solid var(--primary);
+    }
+    
+    .drag-handle {
+      cursor: grab;
+      font-size: 1.2rem;
+      color: var(--gray);
+      display: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+    
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+    
+    .goal-input {
+      grid-column: 2;
+      width: 100%;
+    }
+    
+    .hours-wrapper {
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .hours-input {
+      width: 80px;
+    }
+    
+    .remove-goal {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .remove-goal svg {
+      stroke: white;
+      stroke-width: 2;
+    }
+    
+    .remove-goal:hover {
+      background: #dc2626;
+    }
+    
+    .add-goal-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-right: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .add-no-priority-btn {
+      background: var(--gray);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .add-no-priority-btn:hover {
+      background: #4b5563;
+      transform: translateY(-1px);
+    }
+    
+    .add-goal-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    
+    .total-hours {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .priority-info {
+      background: rgba(99, 102, 241, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      color: var(--primary-dark);
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .start-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      display: block;
+      margin: 2rem auto 0;
+    }
+    
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+    
+    .start-btn:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .counter-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .days-counter {
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .days-label {
+      font-size: 1.2rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .today-date {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    
+    .activities-section {
+      display: none;
+    }
+    
+    .activities-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .activity-card {
+      background: var(--light-gray);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .activity-card.locked {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .activity-card.locked::after {
+      content: '';
+    }
+    
+    .activity-card:hover:not(.locked) {
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .activity-name {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .activity-goal {
+      background: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    
+    .activity-select {
+      background: white;
+      border: 2px solid transparent;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      color: var(--dark);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 80px;
+    }
+    
+    .activity-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .activity-status {
+      font-size: 1.5rem;
+      width: 2rem;
+      text-align: center;
+    }
+    
+    .progress-section {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 1rem;
+      color: white;
+      margin-bottom: 2rem;
+    }
+    
+    .progress-percentage {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    
+    .progress-label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .history-section {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    
+    .history-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+    
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    
+    th {
+      background: var(--light-gray);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.875rem;
+    }
+    
+    tr:hover td {
+      background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .date-cell {
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .percent-cell {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    /* Mobile history styles */
+    .history-list {
+      display: none;
+    }
+    
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .history-item:last-child {
+      border-bottom: none;
+    }
+    
+    .history-date {
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .history-percent {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+    
+    .history-average {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--light-gray);
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    
+    .history-average-value {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .days-counter {
+        font-size: 4rem;
+      }
+      
+      .main-card {
+        padding: 1.5rem;
+      }
+      
+      .activity-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .activity-card > * {
+        justify-self: stretch;
+      }
+      
+      .activity-goal {
+        text-align: center;
+      }
+      
+      .activity-select {
+        width: 100%;
+      }
+      
+      .activity-status {
+        justify-self: center;
+      }
+      
+      table {
+        font-size: 0.75rem;
+      }
+      
+      th, td {
+        padding: 0.5rem 0.25rem;
+      }
+      
+      /* Mobile history table styles */
+      .table-wrapper {
+        display: none;
+      }
+      
+      .history-list {
+        display: block;
+      }
+      
+      /* Buttons layout on mobile */
+      .goals-section button {
+        width: 100%;
+        margin-right: 0;
+      }
+      
+      /* No priority goals mobile styles */
+      .no-priority-goal {
+        grid-template-columns: 30px 1fr 30px;
+        padding: 0.75rem;
+        gap: 0.75rem;
+      }
+      
+      .no-priority-goal .remove-goal {
+        width: 30px;
+        height: 30px;
+        padding: 0.25rem;
+      }
+      
+      .goal-item {
+        display: grid;
+        grid-template-columns: 30px 1fr 30px;
+        grid-template-rows: auto auto;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 0.75rem;
+        touch-action: pan-y;
+      }
+      
+      .goal-item .drag-handle {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        justify-self: center;
+        align-self: center;
+        padding: 0.25rem;
+        font-size: 1.5rem;
+        width: 30px;
+        text-align: center;
+      }
+      
+      .goal-item .goal-input {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+      }
+      
+      .goal-item .hours-wrapper {
+        grid-column: 2;
+        grid-row: 2;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .goal-item .hours-input {
+        width: 80px;
+      }
+      
+      .goal-item .remove-goal {
+        grid-column: 3;
+        grid-row: 1 / 3;
+        justify-self: center;
+        align-self: center;
+        padding: 0.5rem;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 1rem 0.5rem;
+      }
+      
+      .main-card {
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+      
+      th, td {
+        font-size: 0.65rem;
+        padding: 0.25rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -934,83 +930,80 @@ tr:hover td {
         </div>
       </div>
     </div>
-
-```
-<!-- My Challenges List -->
-<div class="my-challenges" id="myChallenges" style="display: none;">
-  <h2 class="history-header">Мои челленджи</h2>
-  <div class="challenges-list" id="challengesList"></div>
-</div>
-
-<div class="main-card">
-  <!-- Setup Section -->
-  <div class="setup-section" id="setupSection">
-    <h2 class="history-header">Создать новый челлендж</h2>
     
-    <div class="form-group">
-      <label class="form-label" for="challengeName">Название челленджа</label>
-      <input type="text" id="challengeName" class="form-input" placeholder="Например: Мой путь к успеху">
+    <!-- My Challenges List -->
+    <div class="my-challenges" id="myChallenges" style="display: none;">
+      <h2 class="history-header">Мои челленджи</h2>
+      <div class="challenges-list" id="challengesList"></div>
     </div>
     
-    <div class="form-group">
-      <label class="form-label" for="challengeDays">Количество дней</label>
-      <input type="number" id="challengeDays" class="form-input" min="1" max="100" value="100">
-    </div>
-    
-    <div class="goals-section">
-      <h3 style="margin-bottom: 1rem;">Цели челленджа</h3>
-      <div id="goalsList"></div>
-      <div style="margin-top: 1rem; display: flex; flex-wrap: wrap;">
-        <button class="add-goal-btn" id="addGoalBtn">
-          <span>+</span> Добавить цель
-        </button>
-        <button class="add-no-priority-btn" id="addNoPriorityBtn">
-          <span>+</span> Цель без приоритета
-        </button>
+    <div class="main-card">
+      <!-- Setup Section -->
+      <div class="setup-section" id="setupSection">
+        <h2 class="history-header">Создать новый челлендж</h2>
+        
+        <div class="form-group">
+          <label class="form-label" for="challengeName">Название челленджа</label>
+          <input type="text" id="challengeName" class="form-input" placeholder="Например: Мой путь к успеху">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="challengeDays">Количество дней</label>
+          <input type="number" id="challengeDays" class="form-input" min="1" max="100" value="100">
+        </div>
+        
+        <div class="goals-section">
+          <h3 style="margin-bottom: 1rem;">Цели челленджа</h3>
+          <div id="goalsList"></div>
+          <div style="margin-top: 1rem; display: flex; flex-wrap: wrap;">
+            <button class="add-goal-btn" id="addGoalBtn">
+              <span>+</span> Добавить цель
+            </button>
+            <button class="add-no-priority-btn" id="addNoPriorityBtn">
+              <span>+</span> Цель без приоритета
+            </button>
+          </div>
+        </div>
+        
+        <div class="total-hours" id="totalHours">Всего часов в день: 0</div>
+        
+        <div class="priority-info" id="priorityInfo" style="display: none;">
+          Перетащите цели для изменения приоритета (сверху - самая важная)
+        </div>
+        
+        <button class="start-btn" id="startSetupBtn" disabled>Начать челлендж</button>
+      </div>
+      
+      <!-- Challenge Section -->
+      <div class="challenge-title" id="challengeTitle" style="display: none;">
+        <h2 id="challengeNameDisplay"></h2>
+        <div class="challenge-duration" id="challengeDuration"></div>
+      </div>
+      
+      <div class="counter-section" id="counterSection" style="display: none;">
+        <div class="days-counter" id="counter">0</div>
+        <div class="days-label">дней осталось</div>
+      </div>
+      
+      <div class="today-date" id="todayDate"></div>
+      
+      <div class="activities-section" id="challengeSection">
+        <div class="activities-grid" id="activities"></div>
+        
+        <div class="progress-section">
+          <div class="progress-percentage" id="percent">0%</div>
+          <div class="progress-label">выполнено сегодня</div>
+        </div>
       </div>
     </div>
     
-    <div class="total-hours" id="totalHours">Всего часов в день: 0</div>
-    
-    <div class="priority-info" id="priorityInfo" style="display: none;">
-      Перетащите цели для изменения приоритета (сверху - самая важная)
+    <div class="history-section" id="historySection" style="display: none;">
+      <h2 class="history-header">История выполнения</h2>
+      <div class="table-wrapper">
+        <table id="historyTbl"></table>
+      </div>
+      <div class="history-list"></div>
     </div>
-    
-    <button class="start-btn" id="startSetupBtn" disabled>Начать челлендж</button>
-  </div>
-  
-  <!-- Challenge Section -->
-  <div class="challenge-title" id="challengeTitle" style="display: none;">
-    <h2 id="challengeNameDisplay"></h2>
-    <div class="challenge-duration" id="challengeDuration"></div>
-  </div>
-  
-  <div class="counter-section" id="counterSection" style="display: none;">
-    <div class="days-counter" id="counter">0</div>
-    <div class="days-label">дней осталось</div>
-  </div>
-  
-  <div class="today-date" id="todayDate"></div>
-  
-  <div class="activities-section" id="challengeSection">
-    <div class="activities-grid" id="activities"></div>
-    
-    <div class="progress-section">
-      <div class="progress-percentage" id="percent">0%</div>
-      <div class="progress-label">выполнено сегодня</div>
-    </div>
-  </div>
-</div>
-
-<div class="history-section" id="historySection" style="display: none;">
-  <h2 class="history-header">История выполнения</h2>
-  <div class="table-wrapper">
-    <table id="historyTbl"></table>
-  </div>
-  <div class="history-list"></div>
-</div>
-```
-
   </div>
 
   <script type="module">
@@ -2036,6 +2029,5 @@ tr:hover td {
 
     init();
   </script>
-
 </body>
 </html>
