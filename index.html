@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -6,681 +7,905 @@
   <title>Твой Челлендж</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --dark: #1f2937;
-      --gray: #6b7280;
-      --light-gray: #f3f4f6;
-      --white: #ffffff;
-      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      color: var(--dark);
-      position: relative;
-      overflow-x: hidden;
-    }
-    
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
-      pointer-events: none;
-    }
-    
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-    
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      background: linear-gradient(to right, #ffffff, #e0e7ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-    
-    .subtitle {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1.1rem;
-      font-weight: 300;
-      line-height: 1.5;
-    }
-    
-    .menu {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-    
-    .menu-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-    
-    .menu-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
-    }
-    
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-top: 0.5rem;
-      background: white;
-      border-radius: 0.75rem;
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(-10px);
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-    
-    .dropdown.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
-    
-    .dropdown button {
-      width: 100%;
-      padding: 0.75rem 1.5rem;
-      background: white;
-      border: none;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-      text-align: left;
-    }
-    
-    .dropdown button:hover {
-      background: var(--light-gray);
-    }
-    
-    .dropdown button.home-btn {
-      color: var(--primary);
-      border-bottom: 1px solid var(--light-gray);
-    }
-    
-    .dropdown button.stop-btn {
-      color: var(--danger);
-    }
-    
-    .main-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 1.5rem;
-      padding: 2.5rem;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 2rem;
-    }
-    
-    /* Setup section styles */
-    .setup-section {
-      display: block;
-    }
-    
-    .my-challenges {
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow);
-    }
-    
-    .my-challenges h3 {
-      color: var(--dark);
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-    
-    .challenge-title {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--light-gray);
-    }
-    
-    .challenge-title h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-    
-    .challenge-duration {
-      font-size: 1rem;
-      color: var(--gray);
-      font-weight: 500;
-    }
-    
-    .challenges-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    
-    .challenge-item {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .challenge-item:hover {
-      background: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    .challenge-info {
-      flex: 1;
-    }
-    
-    .challenge-name {
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 0.25rem;
-    }
-    
-    .challenge-meta {
-      font-size: 0.875rem;
-      color: var(--gray);
-    }
-    
-    .challenge-days {
-      text-align: center;
-      min-width: 80px;
-    }
-    
-    .no-challenges {
-      text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      padding: 2rem;
-      font-style: italic;
-    }
-    
-    .divider {
-      text-align: center;
-      margin: 2rem 0;
-      position: relative;
-    }
-    
-    .divider::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    .divider span {
-      background: var(--white);
-      padding: 0 1rem;
-      position: relative;
-      color: var(--gray);
-      font-weight: 500;
-    }
-    
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    
-    .form-label {
-      display: block;
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 0.5rem;
-    }
-    
-    .form-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--light-gray);
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: all 0.2s;
-    }
-    
-    .form-input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    }
-    
-    .form-input[type="number"] {
-      width: 120px;
-    }
-    
-    .goals-section {
-      margin-top: 2rem;
-    }
-    
-    .goal-item {
-      background: var(--light-gray);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      position: relative;
-    }
-    
-    .goal-item.dragging {
-      opacity: 0.5;
-    }
-    
-    .goal-item.drag-over {
-      border-top: 3px solid var(--primary);
-    }
-    
-    .drag-handle {
-      cursor: grab;
-      font-size: 1.2rem;
-      color: var(--gray);
-      display: none;
-    }
-    
-    .drag-handle:active {
-      cursor: grabbing;
-    }
-    
-    .goal-input {
-      flex: 1;
-    }
-    
-    .hours-input {
-      width: 80px;
-    }
-    
-    .remove-goal {
-      background: var(--danger);
-      color: white;
-      border: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      font-size: 0.875rem;
-      transition: all 0.2s;
-    }
-    
-    .remove-goal:hover {
-      background: #dc2626;
-    }
-    
-    .add-goal-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .add-goal-btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-    
-    .total-hours {
-      background: var(--light-gray);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin: 1.5rem 0;
-      text-align: center;
-      font-weight: 600;
-      color: var(--primary);
-    }
-    
-    .priority-info {
-      background: rgba(99, 102, 241, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin: 1.5rem 0;
-      color: var(--primary-dark);
-      font-weight: 500;
-      text-align: center;
-    }
-    
-    .start-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      border: none;
-      padding: 1rem 3rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-      display: block;
-      margin: 2rem auto 0;
-    }
-    
-    .start-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-    }
-    
-    .start-btn:disabled {
-      background: var(--gray);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    /* Challenge section styles */
-    .counter-section {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    
-    .days-counter {
-      font-size: 6rem;
-      font-weight: 800;
-      color: var(--primary);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .days-label {
-      font-size: 1.2rem;
-      color: var(--gray);
-      font-weight: 500;
-    }
-    
-    .today-date {
-      text-align: center;
-      color: var(--gray);
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-    
-    .activities-section {
-      display: none;
-    }
-    
-    .activities-grid {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .activity-card {
-      background: var(--light-gray);
-      border-radius: 1rem;
-      padding: 1.25rem;
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
-      align-items: center;
-      gap: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    
-    .activity-card.locked {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    
-    .activity-card.locked::after {
-      content: '🔒';
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5rem;
-    }
-    
-    .activity-card:hover:not(.locked) {
-      transform: translateX(5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    
-    .activity-name {
-      font-weight: 600;
-      color: var(--dark);
-    }
-    
-    .activity-goal {
-      background: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--gray);
-    }
-    
-    .activity-select {
-      background: white;
-      border: 2px solid transparent;
-      border-radius: 0.5rem;
-      padding: 0.5rem;
-      font-size: 1rem;
-      color: var(--dark);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      min-width: 80px;
-    }
-    
-    .activity-select:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-    
-    .activity-status {
-      font-size: 1.5rem;
-      width: 2rem;
-      text-align: center;
-    }
-    
-    .progress-section {
-      text-align: center;
-      padding: 2rem;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      border-radius: 1rem;
-      color: white;
-      margin-bottom: 2rem;
-    }
-    
-    .progress-percentage {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
-    
-    .progress-label {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    
-    .history-section {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    
-    .history-header {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: var(--dark);
-    }
-    
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-    }
-    
-    th {
-      background: var(--light-gray);
-      padding: 0.75rem;
-      text-align: left;
-      font-weight: 600;
-      color: var(--dark);
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    td {
-      padding: 0.75rem;
-      border-bottom: 1px solid var(--light-gray);
-      font-size: 0.875rem;
-    }
-    
-    tr:hover td {
-      background: rgba(99, 102, 241, 0.05);
-    }
-    
-    .date-cell {
-      font-weight: 500;
-      color: var(--dark);
-    }
-    
-    .percent-cell {
-      font-weight: 600;
-      color: var(--primary);
-    }
-    
-    tfoot td {
-      font-weight: 700;
-      padding: 1rem 0.75rem;
-      border-top: 2px solid var(--light-gray);
-      background: var(--light-gray);
-    }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .days-counter {
-        font-size: 4rem;
-      }
-      
-      .main-card {
-        padding: 1.5rem;
-      }
-      
-      .activity-card {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-      
-      .activity-card > * {
-        justify-self: stretch;
-      }
-      
-      .activity-goal {
-        text-align: center;
-      }
-      
-      .activity-select {
-        width: 100%;
-      }
-      
-      .activity-status {
-        justify-self: center;
-      }
-      
-      table {
-        font-size: 0.75rem;
-      }
-      
-      th, td {
-        padding: 0.5rem 0.25rem;
-      }
-      
-      .goal-item {
-        flex-wrap: wrap;
-      }
-      
-      .goal-input {
-        width: 100%;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        padding: 1rem 0.5rem;
-      }
-      
-      .main-card {
-        padding: 1rem;
-        border-radius: 1rem;
-      }
-      
-      th, td {
-        font-size: 0.65rem;
-        padding: 0.25rem;
-      }
-    }
+
+```
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --dark: #1f2937;
+  --gray: #6b7280;
+  --light-gray: #f3f4f6;
+  --white: #ffffff;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* SVG Icons */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.icon-home {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.icon-stop {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.icon-lock {
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.icon-check {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--success);
+}
+
+.icon-x {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--danger);
+}
+
+.icon-close {
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.icon-drag {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: var(--dark);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #ffffff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.menu-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown button:hover {
+  background: var(--light-gray);
+}
+
+.dropdown button.home-btn {
+  color: var(--primary);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.dropdown button.stop-btn {
+  color: var(--danger);
+}
+
+.main-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2rem;
+}
+
+.setup-section {
+  display: block;
+}
+
+.my-challenges {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.my-challenges h3 {
+  color: var(--dark);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.challenge-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.challenge-title h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.challenge-duration {
+  font-size: 1rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.challenges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.challenge-item {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.challenge-item:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-info {
+  flex: 1;
+}
+
+.challenge-name {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+}
+
+.challenge-meta {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.challenge-days {
+  text-align: center;
+  min-width: 80px;
+}
+
+.no-challenges {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  font-style: italic;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--light-gray);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-input[type="number"] {
+  width: 120px;
+}
+
+.goals-section {
+  margin-top: 2rem;
+}
+
+.goals-section h3 {
+  margin-bottom: 1rem;
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.no-priority-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.no-priority-goal {
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 1rem;
+}
+
+.no-priority-goal .goal-input {
+  width: 100%;
+  grid-column: 2;
+}
+
+.checkbox-icon {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gray);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  flex-shrink: 0;
+}
+
+.goal-item {
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+  touch-action: pan-y;
+}
+
+.goal-item.dragging {
+  opacity: 0.5;
+}
+
+.goal-item.drag-over {
+  border-top: 3px solid var(--primary);
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 1.2rem;
+  color: var(--gray);
+  display: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.goal-input {
+  grid-column: 2;
+  width: 100%;
+}
+
+.hours-wrapper {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hours-input {
+  width: 80px;
+}
+
+.remove-goal {
+  background: var(--danger);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.remove-goal svg {
+  stroke: white;
+  stroke-width: 2;
+}
+
+.remove-goal:hover {
+  background: #dc2626;
+}
+
+.add-goal-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-no-priority-btn {
+  background: var(--gray);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-no-priority-btn:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+}
+
+.add-goal-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.total-hours {
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.priority-info {
+  background: rgba(99, 102, 241, 0.1);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  color: var(--primary-dark);
+  font-weight: 500;
+  text-align: center;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  display: block;
+  margin: 2rem auto 0;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.start-btn:disabled {
+  background: var(--gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.counter-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.days-counter {
+  font-size: 6rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.days-label {
+  font-size: 1.2rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.today-date {
+  text-align: center;
+  color: var(--gray);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.activities-section {
+  display: none;
+}
+
+.activities-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.activity-card {
+  background: var(--light-gray);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.activity-card.locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.activity-card.locked::after {
+  content: '';
+}
+
+.activity-card:hover:not(.locked) {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.activity-name {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.activity-goal {
+  background: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray);
+}
+
+.activity-select {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: var(--dark);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.activity-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.activity-status {
+  font-size: 1.5rem;
+  width: 2rem;
+  text-align: center;
+}
+
+.progress-section {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 1rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.progress-percentage {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.progress-label {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.history-section {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.history-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--dark);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th {
+  background: var(--light-gray);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--light-gray);
+  font-size: 0.875rem;
+}
+
+tr:hover td {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.date-cell {
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.percent-cell {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Mobile history styles */
+.history-list {
+  display: none;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-date {
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.history-percent {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.history-average {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--light-gray);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.history-average-value {
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .days-counter {
+    font-size: 4rem;
+  }
+  
+  .main-card {
+    padding: 1.5rem;
+  }
+  
+  .activity-card {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .activity-card > * {
+    justify-self: stretch;
+  }
+  
+  .activity-goal {
+    text-align: center;
+  }
+  
+  .activity-select {
+    width: 100%;
+  }
+  
+  .activity-status {
+    justify-self: center;
+  }
+  
+  table {
+    font-size: 0.75rem;
+  }
+  
+  th, td {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  /* Mobile history table styles */
+  .table-wrapper {
+    display: none;
+  }
+  
+  .history-list {
+    display: block;
+  }
+  
+  /* Buttons layout on mobile */
+  .goals-section button {
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  /* No priority goals mobile styles */
+  .no-priority-goal {
+    grid-template-columns: 30px 1fr 30px;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .no-priority-goal .remove-goal {
+    width: 30px;
+    height: 30px;
+    padding: 0.25rem;
+  }
+  
+  .goal-item {
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem;
+    touch-action: pan-y;
+  }
+  
+  .goal-item .drag-handle {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    justify-self: center;
+    align-self: center;
+    padding: 0.25rem;
+    font-size: 1.5rem;
+    width: 30px;
+    text-align: center;
+  }
+  
+  .goal-item .goal-input {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .goal-item .hours-wrapper {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .goal-item .hours-input {
+    width: 80px;
+  }
+  
+  .goal-item .remove-goal {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    justify-self: center;
+    align-self: center;
+    padding: 0.5rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .main-card {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  
+  th, td {
+    font-size: 0.65rem;
+    padding: 0.25rem;
+  }
+}
+```
+
   </style>
 </head>
 <body>
@@ -691,81 +916,101 @@
       <div class="menu" id="menu" style="display: none;">
         <button class="menu-btn" id="hamburger">☰</button>
         <div class="dropdown" id="dropdown">
-          <button class="home-btn" id="homeBtn">🏠 Главная</button>
-          <button class="stop-btn" id="stopBtn">⛔ Остановить челлендж</button>
-        </div>
-      </div>
-    </div>
-    
-    <div class="main-card">
-      <!-- Setup Section -->
-      <div class="setup-section" id="setupSection">
-        <!-- My Challenges List -->
-        <div class="my-challenges" id="myChallenges" style="display: none;">
-          <h3>Мои челленджи</h3>
-          <div class="challenges-list" id="challengesList"></div>
-        </div>
-        
-        <div class="divider" id="divider" style="display: none;">
-          <span>или создать новый</span>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="challengeName">Название челленджа</label>
-          <input type="text" id="challengeName" class="form-input" placeholder="Например: Мой путь к успеху">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="challengeDays">Количество дней</label>
-          <input type="number" id="challengeDays" class="form-input" min="1" max="100" value="100">
-        </div>
-        
-        <div class="goals-section">
-          <h3 style="margin-bottom: 1rem;">Цели челленджа</h3>
-          <div id="goalsList"></div>
-          <button class="add-goal-btn" id="addGoalBtn">
-            <span>+</span> Добавить цель
+          <button class="home-btn" id="homeBtn">
+            <svg class="icon icon-home" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Главная
+          </button>
+          <button class="stop-btn" id="stopBtn">
+            <svg class="icon icon-stop" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            Остановить челлендж
           </button>
         </div>
-        
-        <div class="total-hours" id="totalHours">Всего часов в день: 0</div>
-        
-        <div class="priority-info" id="priorityInfo" style="display: none;">
-          Перетащите цели для изменения приоритета (сверху - самая важная)
-        </div>
-        
-        <button class="start-btn" id="startSetupBtn" disabled>Начать челлендж</button>
       </div>
-      
-      <!-- Challenge Section -->
-      <div class="challenge-title" id="challengeTitle" style="display: none;">
-        <h2 id="challengeNameDisplay"></h2>
-        <div class="challenge-duration" id="challengeDuration"></div>
-      </div>
-      
-      <div class="counter-section" id="counterSection" style="display: none;">
-        <div class="days-counter" id="counter">0</div>
-        <div class="days-label">дней осталось</div>
-      </div>
-      
-      <div class="today-date" id="todayDate"></div>
-      
-      <div class="activities-section" id="challengeSection">
-        <div class="activities-grid" id="activities"></div>
-        
-        <div class="progress-section">
-          <div class="progress-percentage" id="percent">0%</div>
-          <div class="progress-label">выполнено сегодня</div>
-        </div>
+    </div>
+
+```
+<!-- My Challenges List -->
+<div class="my-challenges" id="myChallenges" style="display: none;">
+  <h2 class="history-header">Мои челленджи</h2>
+  <div class="challenges-list" id="challengesList"></div>
+</div>
+
+<div class="main-card">
+  <!-- Setup Section -->
+  <div class="setup-section" id="setupSection">
+    <h2 class="history-header">Создать новый челлендж</h2>
+    
+    <div class="form-group">
+      <label class="form-label" for="challengeName">Название челленджа</label>
+      <input type="text" id="challengeName" class="form-input" placeholder="Например: Мой путь к успеху">
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label" for="challengeDays">Количество дней</label>
+      <input type="number" id="challengeDays" class="form-input" min="1" max="100" value="100">
+    </div>
+    
+    <div class="goals-section">
+      <h3 style="margin-bottom: 1rem;">Цели челленджа</h3>
+      <div id="goalsList"></div>
+      <div style="margin-top: 1rem; display: flex; flex-wrap: wrap;">
+        <button class="add-goal-btn" id="addGoalBtn">
+          <span>+</span> Добавить цель
+        </button>
+        <button class="add-no-priority-btn" id="addNoPriorityBtn">
+          <span>+</span> Цель без приоритета
+        </button>
       </div>
     </div>
     
-    <div class="history-section" id="historySection" style="display: none;">
-      <h2 class="history-header">История выполнения</h2>
-      <div class="table-wrapper">
-        <table id="historyTbl"></table>
-      </div>
+    <div class="total-hours" id="totalHours">Всего часов в день: 0</div>
+    
+    <div class="priority-info" id="priorityInfo" style="display: none;">
+      Перетащите цели для изменения приоритета (сверху - самая важная)
     </div>
+    
+    <button class="start-btn" id="startSetupBtn" disabled>Начать челлендж</button>
+  </div>
+  
+  <!-- Challenge Section -->
+  <div class="challenge-title" id="challengeTitle" style="display: none;">
+    <h2 id="challengeNameDisplay"></h2>
+    <div class="challenge-duration" id="challengeDuration"></div>
+  </div>
+  
+  <div class="counter-section" id="counterSection" style="display: none;">
+    <div class="days-counter" id="counter">0</div>
+    <div class="days-label">дней осталось</div>
+  </div>
+  
+  <div class="today-date" id="todayDate"></div>
+  
+  <div class="activities-section" id="challengeSection">
+    <div class="activities-grid" id="activities"></div>
+    
+    <div class="progress-section">
+      <div class="progress-percentage" id="percent">0%</div>
+      <div class="progress-label">выполнено сегодня</div>
+    </div>
+  </div>
+</div>
+
+<div class="history-section" id="historySection" style="display: none;">
+  <h2 class="history-header">История выполнения</h2>
+  <div class="table-wrapper">
+    <table id="historyTbl"></table>
+  </div>
+  <div class="history-list"></div>
+</div>
+```
+
   </div>
 
   <script type="module">
@@ -781,6 +1026,7 @@
       challengeName: '',
       totalDays: 100,
       goals: [],
+      noPriorityGoals: [],
       startISO: null,
       lastProcessedISO: null,
       activities: {},
@@ -788,6 +1034,7 @@
     };
     
     let setupGoals = [];
+    let setupNoPriorityGoals = [];
     let draggedElement = null;
 
     /* DOM refs */
@@ -832,24 +1079,89 @@
       setupGoals.push({ id: goalId, name, hours });
       renderGoals();
     }
+    
+    function addNoPriorityGoal(name = '') {
+      const goalId = Date.now() + Math.random();
+      setupNoPriorityGoals.push({ id: goalId, name, noPriority: true });
+      renderGoals();
+    }
 
     function removeGoal(id) {
       setupGoals = setupGoals.filter(g => g.id !== id);
       renderGoals();
     }
+    
+    function removeNoPriorityGoal(id) {
+      setupNoPriorityGoals = setupNoPriorityGoals.filter(g => g.id !== id);
+      renderGoals();
+    }
 
     function renderGoals() {
-      goalsList.innerHTML = setupGoals.map((goal, index) => `
-        <div class="goal-item" draggable="true" data-id="${goal.id}">
-          <span class="drag-handle">☰</span>
+      let html = '';
+      
+      // Render no-priority goals first
+      if (setupNoPriorityGoals.length > 0) {
+        html += '<div class="no-priority-section">';
+        html += '<h4 style="margin-bottom: 1rem; color: var(--gray);">Цели без приоритета</h4>';
+        
+        html += setupNoPriorityGoals.map(goal => `
+          <div class="no-priority-goal" data-id="${goal.id}">
+            <div class="checkbox-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <input type="text" class="form-input goal-input" value="${goal.name}" 
+                   placeholder="Название цели" data-id="${goal.id}" data-no-priority="true">
+            <button class="remove-goal" onclick="window.removeNoPriorityGoal(${goal.id})">
+              <svg class="icon icon-close" viewBox="0 0 24 24" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        `).join('');
+        
+        html += '</div>';
+      }
+      
+      // Render priority goals
+      if (setupGoals.length > 0) {
+        html += '<h4 style="margin-bottom: 1rem; color: var(--gray);">Цели с приоритетом</h4>';
+      }
+      
+      html += setupGoals.map((goal, index) => `
+        <div class="goal-item" draggable="true" data-id="${goal.id}" style="grid-template-rows: ${window.innerWidth <= 768 ? 'auto auto' : 'auto'};">
+          <span class="drag-handle">
+            <svg class="icon icon-drag" viewBox="0 0 24 24">
+              <circle cx="12" cy="5" r="1"/>
+              <circle cx="6" cy="5" r="1"/>
+              <circle cx="18" cy="5" r="1"/>
+              <circle cx="12" cy="12" r="1"/>
+              <circle cx="6" cy="12" r="1"/>
+              <circle cx="18" cy="12" r="1"/>
+              <circle cx="12" cy="19" r="1"/>
+              <circle cx="6" cy="19" r="1"/>
+              <circle cx="18" cy="19" r="1"/>
+            </svg>
+          </span>
           <input type="text" class="form-input goal-input" value="${goal.name}" 
                  placeholder="Название цели" data-id="${goal.id}">
-          <input type="number" class="form-input hours-input" value="${goal.hours}" 
-                 min="0.5" max="24" step="0.5" data-id="${goal.id}">
-          <span style="color: var(--gray);">ч/день</span>
-          <button class="remove-goal" onclick="window.removeGoal(${goal.id})">✕</button>
+          <div class="hours-wrapper">
+            <input type="number" class="form-input hours-input" value="${goal.hours}" 
+                   min="0.5" max="24" step="0.5" data-id="${goal.id}">
+            <span style="color: var(--gray);">ч/день</span>
+          </div>
+          <button class="remove-goal" onclick="window.removeGoal(${goal.id})">
+            <svg class="icon icon-close" viewBox="0 0 24 24" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
         </div>
       `).join('');
+      
+      goalsList.innerHTML = html;
 
       updateTotalHours();
       updateStartButton();
@@ -865,8 +1177,13 @@
       // Add event listeners
       document.querySelectorAll('.goal-input').forEach(input => {
         input.addEventListener('input', e => {
-          const goal = setupGoals.find(g => g.id == e.target.dataset.id);
-          if (goal) goal.name = e.target.value;
+          if (e.target.dataset.noPriority) {
+            const goal = setupNoPriorityGoals.find(g => g.id == e.target.dataset.id);
+            if (goal) goal.name = e.target.value;
+          } else {
+            const goal = setupGoals.find(g => g.id == e.target.dataset.id);
+            if (goal) goal.name = e.target.value;
+          }
           updateStartButton();
         });
       });
@@ -884,6 +1201,7 @@
       const items = document.querySelectorAll('.goal-item');
       
       items.forEach(item => {
+        // Desktop drag events
         item.addEventListener('dragstart', e => {
           draggedElement = item;
           item.classList.add('dragging');
@@ -901,6 +1219,109 @@
           } else {
             goalsList.insertBefore(draggedElement, afterElement);
           }
+        });
+        
+        // Touch events for mobile
+        let touchItem = null;
+        let touchOffset = { x: 0, y: 0 };
+        let placeholder = null;
+        
+        const handle = item.querySelector('.drag-handle');
+        
+        handle.addEventListener('touchstart', e => {
+          touchItem = item;
+          const touch = e.touches[0];
+          const rect = item.getBoundingClientRect();
+          touchOffset.x = touch.clientX - rect.left;
+          touchOffset.y = touch.clientY - rect.top;
+          
+          // Create placeholder
+          placeholder = document.createElement('div');
+          placeholder.className = 'goal-item placeholder';
+          placeholder.style.height = rect.height + 'px';
+          placeholder.style.opacity = '0.3';
+          placeholder.style.background = 'var(--primary)';
+          
+          // Create floating copy
+          const floatingCopy = item.cloneNode(true);
+          floatingCopy.style.position = 'fixed';
+          floatingCopy.style.zIndex = '1000';
+          floatingCopy.style.width = rect.width + 'px';
+          floatingCopy.style.left = rect.left + 'px';
+          floatingCopy.style.top = rect.top + 'px';
+          floatingCopy.style.opacity = '0.9';
+          floatingCopy.style.transform = 'scale(1.05)';
+          floatingCopy.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+          floatingCopy.style.pointerEvents = 'none';
+          floatingCopy.classList.add('floating-item');
+          
+          document.body.appendChild(floatingCopy);
+          item.parentNode.insertBefore(placeholder, item);
+          item.style.display = 'none';
+          
+          touchItem.floatingCopy = floatingCopy;
+          
+          e.preventDefault();
+        });
+        
+        handle.addEventListener('touchmove', e => {
+          if (!touchItem || !touchItem.floatingCopy) return;
+          
+          const touch = e.touches[0];
+          touchItem.floatingCopy.style.left = (touch.clientX - touchOffset.x) + 'px';
+          touchItem.floatingCopy.style.top = (touch.clientY - touchOffset.y) + 'px';
+          
+          // Find element under touch point
+          touchItem.floatingCopy.style.display = 'none';
+          const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+          touchItem.floatingCopy.style.display = '';
+          
+          const goalItemBelow = elementBelow?.closest('.goal-item:not(.placeholder):not(.floating-item)');
+          
+          if (goalItemBelow && goalItemBelow !== placeholder) {
+            const rect = goalItemBelow.getBoundingClientRect();
+            const middle = rect.top + rect.height / 2;
+            
+            if (touch.clientY < middle) {
+              goalItemBelow.parentNode.insertBefore(placeholder, goalItemBelow);
+            } else {
+              goalItemBelow.parentNode.insertBefore(placeholder, goalItemBelow.nextSibling);
+            }
+          }
+          
+          e.preventDefault();
+        });
+        
+        handle.addEventListener('touchend', e => {
+          if (!touchItem || !touchItem.floatingCopy) return;
+          
+          // Remove floating copy
+          if (touchItem.floatingCopy) {
+            touchItem.floatingCopy.remove();
+          }
+          
+          // Show original item
+          touchItem.style.display = '';
+          
+          // Place item where placeholder is
+          if (placeholder && placeholder.parentNode) {
+            placeholder.parentNode.insertBefore(touchItem, placeholder);
+            placeholder.remove();
+          }
+          
+          // Update the setupGoals array based on new order
+          const newOrder = [];
+          document.querySelectorAll('.goal-item').forEach(item => {
+            const goalId = parseInt(item.dataset.id);
+            const goal = setupGoals.find(g => g.id === goalId);
+            if (goal) newOrder.push(goal);
+          });
+          setupGoals = newOrder;
+          
+          touchItem = null;
+          placeholder = null;
+          
+          e.preventDefault();
         });
       });
     }
@@ -927,7 +1348,8 @@
 
     function updateStartButton() {
       const hasValidName = challengeNameInput.value.trim().length > 0;
-      const hasValidGoals = setupGoals.length > 0 && setupGoals.every(g => g.name.trim().length > 0);
+      const hasValidGoals = (setupGoals.length > 0 && setupGoals.every(g => g.name.trim().length > 0)) || 
+                           (setupNoPriorityGoals.length > 0 && setupNoPriorityGoals.every(g => g.name.trim().length > 0));
       startSetupBtn.disabled = !hasValidName || !hasValidGoals;
     }
 
@@ -991,22 +1413,39 @@
 
     async function createNewChallenge() {
       try {
-        // Reorder setupGoals based on final DOM order
+        // Collect all goals
+        const allGoals = [];
+        
+        // Add no-priority goals first
+        setupNoPriorityGoals.forEach((g, i) => {
+          allGoals.push({
+            name: g.name,
+            noPriority: true,
+            order: i
+          });
+        });
+        
+        // Then add priority goals
         const orderedGoals = [];
         document.querySelectorAll('.goal-item').forEach(item => {
           const goalId = parseInt(item.dataset.id);
           const goal = setupGoals.find(g => g.id === goalId);
           if (goal) orderedGoals.push(goal);
         });
+        
+        orderedGoals.forEach((g, i) => {
+          allGoals.push({
+            name: g.name,
+            hours: g.hours,
+            priority: i + 1,
+            order: setupNoPriorityGoals.length + i
+          });
+        });
 
         const newState = {
           challengeName: challengeNameInput.value.trim(),
           totalDays: parseInt(challengeDaysInput.value),
-          goals: orderedGoals.map((g, i) => ({ 
-            name: g.name, 
-            hours: g.hours, 
-            priority: i + 1 
-        })),
+          goals: allGoals,
           startISO: todayISO(),
           lastProcessedISO: todayISO(),
           activities: {},
@@ -1014,8 +1453,16 @@
         };
 
         // Initialize activities
-        orderedGoals.forEach((g, i) => {
-          newState.activities[`sel${i + 1}`] = 0;
+        let npIndex = 1;
+        let selIndex = 1;
+        allGoals.forEach(g => {
+          if (g.noPriority) {
+            newState.activities[`np${npIndex}`] = false;
+            npIndex++;
+          } else {
+            newState.activities[`sel${selIndex}`] = 0;
+            selIndex++;
+          }
         });
 
         console.log('Creating challenge with data:', newState);
@@ -1061,9 +1508,12 @@
       
       // Reset activities
       Object.keys(state.activities).forEach(key => {
-        state.activities[key] = 0;
+        if (key.startsWith('np')) {
+          state.activities[key] = false;
+        } else {
+          state.activities[key] = 0;
+        }
       });
-      
       
       state.lastProcessedISO = today;
       await saveState();
@@ -1087,11 +1537,10 @@
       
       if (challenges.length > 0) {
         myChallenges.style.display = 'block';
-        divider.style.display = 'block';
         
         challengesList.innerHTML = challenges.map(ch => {
-          const daysLeft = Math.max(0, ch.totalDays - diff(ch.startISO, todayISO()));
-          const totalGoals = ch.goals.length;
+          const daysPassed = Math.max(0, diff(ch.startISO, todayISO()) +1);
+          const totalGoals = (ch.goals ? ch.goals.length : 0) + (ch.noPriorityGoals ? ch.noPriorityGoals.length : 0);
           
           return `
             <div class="challenge-item" onclick="window.continueChallenge(${ch.id})">
@@ -1103,7 +1552,7 @@
                 </div>
               </div>
               <div class="challenge-days">
-                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">${daysLeft}</div>
+                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">${daysPassed}</div>
                 <div style="font-size: 0.875rem; color: var(--gray);">из ${ch.totalDays}</div>
               </div>
             </div>
@@ -1111,12 +1560,12 @@
         }).join('');
       } else {
         myChallenges.style.display = 'none';
-        divider.style.display = 'none';
       }
     }
 
     function showChallenge() {
       setupSection.style.display = 'none';
+      myChallenges.style.display = 'none';
       challengeTitle.style.display = 'block';
       counterSection.style.display = 'block';
       section.style.display = 'block';
@@ -1144,23 +1593,88 @@
       const daysLeft = Math.max(0, state.totalDays - diff(state.startISO, todayISO()));
       counter.textContent = daysLeft;
 
+      // Separate goals
+      const noPriorityGoals = state.goals.filter(g => g.noPriority);
+      const priorityGoals = state.goals.filter(g => !g.noPriority);
+
       // Render activities
-      activitiesGrid.innerHTML = state.goals.map((goal, i) => {
-        const isLocked = !canAccessGoal(i);
-        return `
+      let activitiesHTML = '';
+      let npIndex = 1;
+      let selIndex = 1;
+      
+      // Render no-priority goals first
+      if (noPriorityGoals.length > 0) {
+        noPriorityGoals.forEach((goal) => {
+          const isChecked = state.activities[`np${npIndex}`] || false;
+          activitiesHTML += `
+            <div class="activity-card">
+              <div class="activity-name">${goal.name}</div>
+              <div style="margin-left: auto;">
+                <label style="cursor: pointer;">
+                  <input type="checkbox" id="np${npIndex}" ${isChecked ? 'checked' : ''} 
+                         style="display: none;" onchange="window.toggleNoPriorityGoal(${npIndex - 1})">
+                  <div class="checkbox-icon" style="cursor: pointer;">
+                    ${isChecked ? `
+                      <svg class="icon" viewBox="0 0 24 24" fill="var(--success)">
+                        <rect x="3" y="3" width="18" height="18" rx="2" fill="var(--success)"/>
+                        <polyline points="7 12 10 15 17 8" stroke="white" stroke-width="2" fill="none"/>
+                      </svg>
+                    ` : `
+                      <svg class="icon" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    `}
+                  </div>
+                </label>
+              </div>
+              <div class="activity-status" id="npst${npIndex}">
+                ${isChecked ? `
+                  <svg class="icon icon-check" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="var(--success)"/>
+                    <polyline points="9 12 12 15 16 11" stroke="white" stroke-width="2" fill="none"/>
+                  </svg>
+                ` : `
+                  <svg class="icon icon-x" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="var(--danger)"/>
+                    <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/>
+                  </svg>
+                `}
+              </div>
+            </div>
+          `;
+          npIndex++;
+        });
+        
+        // Add separator if there are priority goals
+        if (priorityGoals.length > 0) {
+          activitiesHTML += '<div style="height: 1px; background: var(--light-gray); margin: 1.5rem 0;"></div>';
+        }
+      }
+      
+      // Render priority goals
+      priorityGoals.forEach((goal, i) => {
+        const isLocked = !canAccessGoal(i, priorityGoals);
+        activitiesHTML += `
           <div class="activity-card ${isLocked ? 'locked' : ''}">
             <div class="activity-name">${goal.name}</div>
             <div class="activity-goal">${goal.hours} ч</div>
-            <select class="activity-select" id="sel${i + 1}" ${isLocked ? 'disabled' : ''}>
-              ${generateOptions(state.activities[`sel${i + 1}`] || 0)}
+            <select class="activity-select" id="sel${selIndex}" ${isLocked ? 'disabled' : ''}>
+              ${generateOptions(state.activities[`sel${selIndex}`] || 0)}
             </select>
-            <div class="activity-status" id="st${i + 1}">${getStatusIcon(i)}</div>
+            <div class="activity-status" id="st${selIndex}">${getStatusIcon(selIndex - 1, priorityGoals)}</div>
+            ${isLocked ? `<svg class="icon icon-lock" viewBox="0 0 24 24">
+              <rect x="5" y="11" width="14" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>` : ''}
           </div>
         `;
-      }).join('');
+        selIndex++;
+      });
+      
+      activitiesGrid.innerHTML = activitiesHTML;
 
       // Add event listeners
-      state.goals.forEach((_, i) => {
+      priorityGoals.forEach((_, i) => {
         const select = $(`sel${i + 1}`);
         if (select && !select.disabled) {
           select.onchange = async () => {
@@ -1176,13 +1690,13 @@
       updateStatus();
     }
 
-    function canAccessGoal(index) {
+    function canAccessGoal(index, priorityGoals) {
       if (index === 0) return true;
       
       // Check if all previous goals are completed
       for (let i = 0; i < index; i++) {
         const hours = state.activities[`sel${i + 1}`] || 0;
-        if (hours < state.goals[i].hours) {
+        if (hours < priorityGoals[i].hours) {
           return false;
         }
       }
@@ -1196,24 +1710,71 @@
       }).join('');
     }
 
-    function getStatusIcon(index) {
+    function getStatusIcon(index, priorityGoals) {
       const hours = state.activities[`sel${index + 1}`] || 0;
-      const goal = state.goals[index];
-      return hours >= goal.hours ? '✅' : '❌';
+      const goal = priorityGoals[index];
+      return hours >= goal.hours 
+        ? `<svg class="icon icon-check" viewBox="0 0 24 24">
+             <circle cx="12" cy="12" r="10" fill="var(--success)"/>
+             <polyline points="9 12 12 15 16 11" stroke="white" stroke-width="2" fill="none"/>
+           </svg>`
+        : `<svg class="icon icon-x" viewBox="0 0 24 24">
+             <circle cx="12" cy="12" r="10" fill="var(--danger)"/>
+             <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/>
+           </svg>`;
     }
 
     function updateStatus() {
       let done = 0;
-      state.goals.forEach((goal, i) => {
-        const hours = state.activities[`sel${i + 1}`] || 0;
-        const icon = $(`st${i + 1}`);
+      let total = 0;
+      
+      // Separate goals
+      const noPriorityGoals = state.goals.filter(g => g.noPriority);
+      const priorityGoals = state.goals.filter(g => !g.noPriority);
+      
+      // Count no-priority goals
+      let npIndex = 1;
+      noPriorityGoals.forEach(() => {
+        total++;
+        if (state.activities[`np${npIndex}`]) done++;
+        
+        const icon = $(`npst${npIndex}`);
         if (icon) {
-          icon.textContent = hours >= goal.hours ? '✅' : '❌';
-          if (hours >= goal.hours) done++;
+          icon.innerHTML = state.activities[`np${npIndex}`]
+            ? `<svg class="icon icon-check" viewBox="0 0 24 24">
+                 <circle cx="12" cy="12" r="10" fill="var(--success)"/>
+                 <polyline points="9 12 12 15 16 11" stroke="white" stroke-width="2" fill="none"/>
+               </svg>`
+            : `<svg class="icon icon-x" viewBox="0 0 24 24">
+                 <circle cx="12" cy="12" r="10" fill="var(--danger)"/>
+                 <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/>
+               </svg>`;
         }
+        npIndex++;
       });
       
-      percent.textContent = Math.round(done / state.goals.length * 100) + '%';
+      // Count priority goals
+      let selIndex = 1;
+      priorityGoals.forEach((goal) => {
+        total++;
+        const hours = state.activities[`sel${selIndex}`] || 0;
+        const icon = $(`st${selIndex}`);
+        if (icon) {
+          icon.innerHTML = hours >= goal.hours 
+            ? `<svg class="icon icon-check" viewBox="0 0 24 24">
+                 <circle cx="12" cy="12" r="10" fill="var(--success)"/>
+                 <polyline points="9 12 12 15 16 11" stroke="white" stroke-width="2" fill="none"/>
+               </svg>`
+            : `<svg class="icon icon-x" viewBox="0 0 24 24">
+                 <circle cx="12" cy="12" r="10" fill="var(--danger)"/>
+                 <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/>
+               </svg>`;
+          if (hours >= goal.hours) done++;
+        }
+        selIndex++;
+      });
+      
+      percent.textContent = total > 0 ? Math.round(done / total * 100) + '%' : '0%';
     }
 
     function renderHistory() {
@@ -1225,49 +1786,133 @@
       
       historySection.style.display = 'block';
       
-      let html = '<thead><tr><th>Дата</th>';
-      html += state.goals.map(g => `<th>${g.name}</th>`).join('');
-      html += '<th>%</th></tr></thead><tbody>';
+      // Check if mobile
+      const isMobile = window.innerWidth <= 768;
       
       let totalPerc = 0;
+      const dayData = [];
       
+      // Calculate data for all days
       days.sort((a, b) => new Date(b) - new Date(a)).forEach(d => {
         const row = state.history[d];
         let done = 0;
+        let total = 0;
         
-        state.goals.forEach((goal, i) => {
-          if ((row[`sel${i + 1}`] || 0) >= goal.hours) done++;
+        // Separate goals
+        const noPriorityGoals = state.goals.filter(g => g.noPriority);
+        const priorityGoals = state.goals.filter(g => !g.noPriority);
+        
+        // Count no-priority goals
+        let npIndex = 1;
+        noPriorityGoals.forEach(() => {
+          total++;
+          if (row[`np${npIndex}`]) done++;
+          npIndex++;
         });
         
-        const perc = Math.round(done / state.goals.length * 100);
+        // Count priority goals
+        let selIndex = 1;
+        priorityGoals.forEach((goal) => {
+          total++;
+          if ((row[`sel${selIndex}`] || 0) >= goal.hours) done++;
+          selIndex++;
+        });
+        
+        const perc = total > 0 ? Math.round(done / total * 100) : 0;
         totalPerc += perc;
         
         const dateObj = new Date(d);
         const formattedDate = dateObj.toLocaleDateString('ru-RU', { 
           day: 'numeric', 
-          month: 'short' 
+          month: 'long' 
         });
         
-        html += `<tr><td class="date-cell">${formattedDate}</td>`;
-        state.goals.forEach((goal, i) => {
-          const val = row[`sel${i + 1}`] || 0;
-          const isComplete = val >= goal.hours;
-          html += `<td style="color: ${isComplete ? 'var(--success)' : 'var(--gray)'}">${val}</td>`;
-        });
-        html += `<td class="percent-cell">${perc}%</td></tr>`;
+        dayData.push({ date: d, formattedDate, row, perc });
       });
       
-      html += '</tbody>';
       const avg = Math.round(totalPerc / days.length * 10) / 10;
-      html += `<tfoot><tr><td colspan="${state.goals.length + 1}" style="text-align:right;">Средний процент</td>`;
-      html += `<td class="percent-cell">${avg}%</td></tr></tfoot>`;
       
-      historyTbl.innerHTML = html;
+      if (isMobile) {
+        // Mobile - simple list
+        let html = `<div class="history-list">`;
+        
+        dayData.forEach(day => {
+          html += `
+            <div class="history-item">
+              <div class="history-date">${day.formattedDate}</div>
+              <div class="history-percent">${day.perc}%</div>
+            </div>
+          `;
+        });
+        
+        html += `
+          <div class="history-average">
+            <div>Средний процент</div>
+            <div class="history-average-value">${avg}%</div>
+          </div>
+        </div>`;
+        
+        historySection.innerHTML = `
+          <h2 class="history-header">История выполнения</h2>
+          ${html}
+        `;
+      } else {
+        // Desktop - full table
+        let html = '<thead><tr><th>Дата</th>';
+        
+        // Add headers for all goals
+        state.goals.forEach(g => {
+          html += `<th>${g.name}</th>`;
+        });
+        
+        html += '<th>%</th></tr></thead><tbody>';
+        
+        dayData.forEach(day => {
+          html += `<tr><td class="date-cell">${day.formattedDate}</td>`;
+          
+          // Display all goals in order
+          let npIndex = 1;
+          let selIndex = 1;
+          
+          state.goals.forEach((goal) => {
+            if (goal.noPriority) {
+              // For no-priority goals, show checkmark or dash
+              const isChecked = day.row[`np${npIndex}`] || false;
+              html += `<td style="text-align: center; color: ${isChecked ? 'var(--success)' : 'var(--gray)'}">
+                ${isChecked ? '✓' : '—'}
+              </td>`;
+              npIndex++;
+            } else {
+              // For priority goals, show hours
+              const val = day.row[`sel${selIndex}`] || 0;
+              const isComplete = val >= goal.hours;
+              html += `<td style="color: ${isComplete ? 'var(--success)' : 'var(--gray)'}">${val}</td>`;
+              selIndex++;
+            }
+          });
+          
+          html += `<td class="percent-cell">${day.perc}%</td></tr>`;
+        });
+        
+        html += '</tbody>';
+        html += `<tfoot><tr><td colspan="${state.goals.length + 1}" style="text-align:right;">Средний процент</td>`;
+        html += `<td class="percent-cell">${avg}%</td></tr></tfoot>`;
+        
+        historySection.innerHTML = `
+          <h2 class="history-header">История выполнения</h2>
+          <div class="table-wrapper">
+            <table id="historyTbl">${html}</table>
+          </div>
+        `;
+      }
     }
 
     /* Event handlers */
     challengeNameInput.addEventListener('input', updateStartButton);
     addGoalBtn.addEventListener('click', () => addGoal());
+    
+    const addNoPriorityBtn = $("addNoPriorityBtn");
+    addNoPriorityBtn.addEventListener('click', () => addNoPriorityGoal());
     
     startSetupBtn.addEventListener('click', async () => {
       if (!startSetupBtn.disabled) {
@@ -1290,6 +1935,7 @@
       challengeNameInput.value = '';
       challengeDaysInput.value = '100';
       setupGoals = [];
+      setupNoPriorityGoals = [];
       addGoal('', 2);
       // Показываем главную страницу
       showSetup();
@@ -1308,6 +1954,12 @@
 
     // Make functions available globally
     window.removeGoal = removeGoal;
+    window.removeNoPriorityGoal = removeNoPriorityGoal;
+    window.toggleNoPriorityGoal = async (index) => {
+      state.activities[`np${index + 1}`] = !state.activities[`np${index + 1}`];
+      await saveState();
+      renderChallenge();
+    };
     window.continueChallenge = async (challengeId) => {
       const challenge = await loadChallenge(challengeId);
       if (challenge) {
@@ -1328,6 +1980,8 @@
       } else {
         showSetup();
         // Add default goals
+        setupGoals = [];
+        setupNoPriorityGoals = [];
         addGoal('', 2);
         // Load challenges list
         loadAndShowChallenges();
@@ -1367,9 +2021,21 @@
           }
         }
       });
+      
+      // Re-render history on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (state.startISO && historySection.style.display !== 'none') {
+            renderHistory();
+          }
+        }, 250);
+      });
     }
 
     init();
   </script>
+
 </body>
 </html>
